@@ -1,0 +1,7 @@
+1) vecteurs
+2) equation de droite
+3) equation de sphere
+4) produit scalaire
+5) plan (x, y)
+6) formules cercle
+7) equation du second degré
