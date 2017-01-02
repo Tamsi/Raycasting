@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Mon Jan  2 22:08:12 2017 Tamsi Besson
+** Last update Mon Jan  2 23:33:16 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -13,10 +13,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#ifndef HELLO
-#define HELLO
-
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 #define SCREEN_WIDTH 1024
@@ -51,13 +47,19 @@ static int     map[MAP_ROWS][MAP_COLS] = {
   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-#endif
-
 typedef struct
 {
   double   x;
   double   y;
 }coo;
+
+typedef struct s_my_framebuffer
+
+{
+  sfUint8 *pixels;
+  int width;
+  int height;
+}t_my_framebuffer;
 
 typedef struct
 {
@@ -65,5 +67,5 @@ typedef struct
   coo pos;
 }pdir;
 
-void	raycast(sfUint8 *, pdir, coo);
-sfUint8 *create_pixel_buffer(int , int);
+void	raycast(t_my_framebuffer, pdir, coo);
+t_my_framebuffer create_pixel_buffer(int , int);

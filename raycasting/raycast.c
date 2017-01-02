@@ -5,12 +5,12 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:02:06 2017 Tamsi Besson
-** Last update Mon Jan  2 21:13:24 2017 Tamsi Besson
+** Last update Mon Jan  2 23:35:38 2017 Tamsi Besson
 */
 
 #include "my.h"
 
-void raycast(sfUint8* pixels, pdir camera, coo plan)
+void raycast(t_my_framebuffer pixels, pdir camera, coo plan)
 {
   int   x = 0;
 
@@ -111,17 +111,17 @@ void raycast(sfUint8* pixels, pdir camera, coo plan)
         {
           if (y < draw_start || y > draw_end)
             {
-              pixels[(SCREEN_WIDTH * y + x) * 4] = 0;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 1] = 0;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 2] = 0;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 3] = 0;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4] = 0;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 1] = 0;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 2] = 0;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 3] = 0;
             }
           else
             {
-              pixels[(SCREEN_WIDTH * y + x) * 4] = color.r;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 1] = color.g;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 2] = color.b;
-              pixels[(SCREEN_WIDTH * y + x) * 4 + 3] = color.a;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4] = color.r;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 1] = color.g;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 2] = color.b;
+              pixels.pixels[(SCREEN_WIDTH * y + x) * 4 + 3] = color.a;
             }
           y++;
         }

@@ -1,22 +1,25 @@
 #include "my.h"
 
-sfUint8* create_pixel_buffer(int width, int height)
+t_my_framebuffer create_pixel_buffer(int width, int height)
 {
   int i;
   sfUint8* pixels;
+  t_my_framebuffer pixelbuffer;
 
   pixels = malloc(width * height * 4 * sizeof(*pixels));
   if (pixels == NULL)
-    {
-      exit(EXIT_FAILURE);
-    }
+    exit(EXIT_FAILURE);
   i = 0;
   while (i < width * height * 4)
     {
       pixels[i] = 0;
       i = i + 1;
     }
-  return pixels;
+  pixelbuffer.pixels = pixels;
+  pixelbuffer.height = height;
+  pixelbuffer.width = width;
+
+  return (pixelbuffer);
 }
 
 int     main()
@@ -26,7 +29,8 @@ int     main()
   sfEvent event;
   sfSprite* sprite;
   sfTexture* texture;
-  sfUint8* pixels;
+  //sfUint8*
+  t_my_framebuffer pixels;
   pdir camera;
   coo plan;
   double moveSpeed = 0.2;
@@ -99,7 +103,7 @@ int     main()
             }
         }
       raycast(pixels, camera, plan);
-      sfTexture_updateFromPixels(texture, pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+      sfTexture_updateFromPixels(texture, pixels.pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
       sfRenderWindow_clear(window, sfBlack);
       sfRenderWindow_drawSprite(window, sprite, NULL);
       sfRenderWindow_display(window);
