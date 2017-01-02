@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Mon Jan  2 17:04:02 2017 Tamsi Besson
+** Last update Mon Jan  2 22:08:12 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifndef HELLO
+#define HELLO
+
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 #define SCREEN_WIDTH 1024
@@ -21,7 +24,7 @@
 #define MAP_COLS 24
 #define MAP_ROWS 24
 
-int     map[MAP_ROWS][MAP_COLS] = {
+static int     map[MAP_ROWS][MAP_COLS] = {
   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
   {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
   {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -47,6 +50,8 @@ int     map[MAP_ROWS][MAP_COLS] = {
   {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
+
+#endif
 
 typedef struct
 {
