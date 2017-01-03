@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Tue Jan  3 15:14:13 2017 Tamsi Besson
+** Last update Tue Jan  3 15:38:54 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -51,8 +51,8 @@ static int     map[MAP_ROWS][MAP_COLS] = {
 
 typedef struct
 {
-  double   x;
-  double   y;
+  float   x;
+  float   y;
 }coo;
 
 typedef struct s_my_framebuffer
