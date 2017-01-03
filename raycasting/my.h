@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Tue Jan  3 14:54:55 2017 Tamsi Besson
+** Last update Tue Jan  3 15:14:13 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -71,5 +71,6 @@ typedef struct
 #endif //MY_H
 
 void	raycast(t_my_framebuffer *, pdir, coo);
-t_my_framebuffer *create_pixel_buffer(int , int);
 void	my_put_pixel(t_my_framebuffer *, int, int, sfColor);
+void    my_draw_line(t_my_framebuffer *, sfVector2i, sfVector2i, sfColor);
+t_my_framebuffer *create_pixel_buffer(int , int);
