@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Mon Jan  2 23:33:16 2017 Tamsi Besson
+** Last update Tue Jan  3 14:54:55 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -13,6 +13,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifndef MY_H
+#define MY_H
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 #define SCREEN_WIDTH 1024
@@ -54,7 +56,6 @@ typedef struct
 }coo;
 
 typedef struct s_my_framebuffer
-
 {
   sfUint8 *pixels;
   int width;
@@ -67,5 +68,8 @@ typedef struct
   coo pos;
 }pdir;
 
-void	raycast(t_my_framebuffer, pdir, coo);
-t_my_framebuffer create_pixel_buffer(int , int);
+#endif //MY_H
+
+void	raycast(t_my_framebuffer *, pdir, coo);
+t_my_framebuffer *create_pixel_buffer(int , int);
+void	my_put_pixel(t_my_framebuffer *, int, int, sfColor);
