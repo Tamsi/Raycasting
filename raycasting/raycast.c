@@ -5,12 +5,12 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:02:06 2017 Tamsi Besson
-** Last update Tue Jan  3 15:34:43 2017 Tamsi Besson
+** Last update Tue Jan  3 15:41:41 2017 Tamsi Besson
 */
 
 #include "my.h"
 
-void raycast(t_my_framebuffer *pixels, pdir camera, coo plan)
+void raycast(t_my_framebuffer *pixels, pdir camera, sfVector2f plan)
 {
   int   x = 0;
 
@@ -115,29 +115,6 @@ void raycast(t_my_framebuffer *pixels, pdir camera, coo plan)
       to.y = SCREEN_HEIGHT;
       color = sfBlack;
       my_draw_line(pixels, from, to, color);
-      /*while (y < SCREEN_HEIGHT)
-        {
-          if (y < draw_start || y > draw_end)
-            {
-	      color = sfBlack;
-              my_put_pixel(pixels, x, y, color);
-            }
-          else
-            {
-	      if (map[mapX][mapY] == 1)
-		color = sfBlue;
-	      else if (map[mapX][mapY] == 2)
-		color = sfRed;
-	      if (side == 1)
-		{
-		  color.r = (int) color.r / 2;
-		  color.g = (int) color.g / 2;
-		  color.b = (int) color.b / 2;
-		}
-              my_put_pixel(pixels, x, y, color);
-            }
-          y++;
-	  }*/
       x++;
     }
 }

@@ -32,7 +32,7 @@ int     main()
   //sfUint8*
   t_my_framebuffer *pixels;
   pdir camera;
-  coo plan;
+  sfVector2f plan;
   double moveSpeed = 0.2;
   double rotSpeed = 0.3;
   
@@ -73,11 +73,12 @@ int     main()
                 }
               if (event.key.code == sfKeyUp)
                 {
-                  double moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
+                  float moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
                   if (map[(int)(camera.pos.x + moveX)][(int)(camera.pos.y + moveY)] == 0)
                     {
-                      camera.pos.x += moveX;
-                      camera.pos.y += moveY;
+		      camera.pos = move_forward(camera.pos, moveY, moveX);
+                      //camera.pos.x += moveX;
+                      //camera.pos.y += moveY;
                     }
                 }
               if (event.key.code == sfKeyRight)
