@@ -14,6 +14,5 @@ sfVector2f	move_forward(sfVector2f pos, float direction, float distance)
 {
   pos.x += distance;
   pos.y += direction;
-
   return (pos);
 }

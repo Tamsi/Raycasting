@@ -29,15 +29,14 @@ int     main()
   sfEvent event;
   sfSprite* sprite;
   sfTexture* texture;
-  //sfUint8*
-  t_my_framebuffer *pixels;
-  pdir camera;
+  t_my_framebuffer *framebuffer;
+  t_pdir camera;
   sfVector2f plan;
   double moveSpeed = 0.02;
   double rotSpeed = 0.03;
   
   sprite = sfSprite_create();
-  pixels = create_pixel_buffer(SCREEN_WIDTH, SCREEN_HEIGHT);
+  framebuffer = create_pixel_buffer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
   plan.x = 0;
   plan.y = 0.66;
@@ -54,8 +53,6 @@ int     main()
     return EXIT_FAILURE;
   while (sfRenderWindow_isOpen(window))
     {
-      //if (event.type == sfEvtClosed)
-      //sfRenderWindow_close(window);
       if (sfKeyboard_isKeyPressed(sfKeyEscape))
 	sfRenderWindow_close(window);
       if (sfKeyboard_isKeyPressed(sfKeyDown))
@@ -97,8 +94,8 @@ int     main()
 	  plan.x = plan.x * cos(rotSpeed) - plan.y * sin(rotSpeed);
 	  plan.y = oldPlaneX * sin(rotSpeed) + plan.y * cos(rotSpeed);
 	}
-      raycast(pixels, camera, plan);
-      sfTexture_updateFromPixels(texture, pixels->pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+      raycast(framebuffer, camera, plan);
+      sfTexture_updateFromPixels(texture, framebuffer->pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
       sfRenderWindow_clear(window, sfBlack);
       sfRenderWindow_drawSprite(window, sprite, NULL);
       sfRenderWindow_display(window);

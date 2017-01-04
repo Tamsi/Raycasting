@@ -5,7 +5,7 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:06:34 2017 Tamsi Besson
-** Last update Tue Jan  3 15:53:01 2017 Tamsi Besson
+** Last update Wed Jan  4 21:19:39 2017 Tamsi Besson
 */
 
 #include <SFML/Audio.h>
@@ -49,11 +49,11 @@ static int     map[MAP_ROWS][MAP_COLS] = {
   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-typedef struct
+typedef struct s_coo
 {
   double   x;
   double   y;
-}coo;
+}t_coo;
 
 typedef struct s_my_framebuffer
 {
@@ -62,16 +62,17 @@ typedef struct s_my_framebuffer
   int height;
 }t_my_framebuffer;
 
-typedef struct
+typedef struct s_pdir
 {
   sfVector2f dir;
   sfVector2f pos;
-}pdir;
+}t_pdir;
 
 #endif //MY_H
 
-void	raycast(t_my_framebuffer *, pdir, sfVector2f);
+float	raycast(t_my_framebuffer *, t_pdir, sfVector2f);
 void	my_put_pixel(t_my_framebuffer *, int, int, sfColor);
-void    my_draw_line(t_my_framebuffer *, sfVector2i, sfVector2i, sfColor);
+void  my_draw_line(t_my_framebuffer *, sfVector2i, sfVector2i, sfColor);
+void  draw_vert(int, int, t_my_framebuffer *, sfVector2i);
 t_my_framebuffer *create_pixel_buffer(int , int);
 sfVector2f      move_forward(sfVector2f, float, float);
