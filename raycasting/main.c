@@ -33,8 +33,8 @@ int     main()
   t_my_framebuffer *pixels;
   pdir camera;
   sfVector2f plan;
-  double moveSpeed = 0.2;
-  double rotSpeed = 0.3;
+  double moveSpeed = 0.02;
+  double rotSpeed = 0.03;
   
   sprite = sfSprite_create();
   pixels = create_pixel_buffer(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -54,55 +54,49 @@ int     main()
     return EXIT_FAILURE;
   while (sfRenderWindow_isOpen(window))
     {
-      while (sfRenderWindow_pollEvent(window, &event))
-        {
-          if (event.type == sfEvtClosed)
-            sfRenderWindow_close(window);
-          if (event.type == sfEvtKeyPressed)
-            {
-              if (event.key.code == sfKeyEscape)
-                sfRenderWindow_close(window);
-              if (event.key.code == sfKeyDown)
-                {
-                  double moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
-                  if (map[(int)(camera.pos.x - moveX)][(int)(camera.pos.y - moveY)] == 0)
-                    {
-                      camera.pos.x -= moveX;
-                      camera.pos.y -= moveY;
-                    }
-                }
-              if (event.key.code == sfKeyUp)
-                {
-                  float moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
-                  if (map[(int)(camera.pos.x + moveX)][(int)(camera.pos.y + moveY)] == 0)
-                    {
-		      camera.pos = move_forward(camera.pos, moveY, moveX);
-                      //camera.pos.x += moveX;
-                      //camera.pos.y += moveY;
-                    }
-                }
-              if (event.key.code == sfKeyRight)
-                {
-                  double oldDirX = camera.dir.x;
-                  camera.dir.x = camera.dir.x * cos(-rotSpeed) - camera.dir.y * sin(-rotSpeed);
-                  camera.dir.y = oldDirX * sin(-rotSpeed) + camera.dir.y * cos(-rotSpeed);
-                  double oldPlaneX = plan.x;
-                  plan.x = plan.x * cos(-rotSpeed) - plan.y * sin(-rotSpeed);
-                  plan.y = oldPlaneX * sin(-rotSpeed) + plan.y * cos(-rotSpeed);
-                }
-              //rotate to the left
-              if (event.key.code == sfKeyLeft)
-                {
-                  //both camera direction and camera plane must be rotated
-                  double oldDirX = camera.dir.x;
-                  camera.dir.x = camera.dir.x * cos(rotSpeed) - camera.dir.y * sin(rotSpeed);
-                  camera.dir.y = oldDirX * sin(rotSpeed) + camera.dir.y * cos(rotSpeed);
-                  double oldPlaneX = plan.x;
-                  plan.x = plan.x * cos(rotSpeed) - plan.y * sin(rotSpeed);
-                  plan.y = oldPlaneX * sin(rotSpeed) + plan.y * cos(rotSpeed);
-                }
-            }
-        }
+      //if (event.type == sfEvtClosed)
+      //sfRenderWindow_close(window);
+      if (sfKeyboard_isKeyPressed(sfKeyEscape))
+	sfRenderWindow_close(window);
+      if (sfKeyboard_isKeyPressed(sfKeyDown))
+	{
+	  double moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
+	  if (map[(int)(camera.pos.x - moveX)][(int)(camera.pos.y - moveY)] == 0)
+	    {
+	      camera.pos.x -= moveX;
+	      camera.pos.y -= moveY;
+	    }
+	}
+      if (sfKeyboard_isKeyPressed(sfKeyUp))
+	{
+	  float moveX = camera.dir.x * moveSpeed, moveY = camera.dir.y * moveSpeed;
+	  if (map[(int)(camera.pos.x + moveX)][(int)(camera.pos.y + moveY)] == 0)
+	    {
+	      camera.pos = move_forward(camera.pos, moveY, moveX);
+	      //camera.pos.x += moveX;
+	      //camera.pos.y += moveY;
+	    }
+	}
+      if (sfKeyboard_isKeyPressed(sfKeyRight))
+	{
+	  double oldDirX = camera.dir.x;
+	  camera.dir.x = camera.dir.x * cos(-rotSpeed) - camera.dir.y * sin(-rotSpeed);
+	  camera.dir.y = oldDirX * sin(-rotSpeed) + camera.dir.y * cos(-rotSpeed);
+	  double oldPlaneX = plan.x;
+	  plan.x = plan.x * cos(-rotSpeed) - plan.y * sin(-rotSpeed);
+	  plan.y = oldPlaneX * sin(-rotSpeed) + plan.y * cos(-rotSpeed);
+	}
+      //rotate to the left
+      if (sfKeyboard_isKeyPressed(sfKeyLeft))
+	{
+	  //both camera direction and camera plane must be rotated
+	  double oldDirX = camera.dir.x;
+	  camera.dir.x = camera.dir.x * cos(rotSpeed) - camera.dir.y * sin(rotSpeed);
+	  camera.dir.y = oldDirX * sin(rotSpeed) + camera.dir.y * cos(rotSpeed);
+	  double oldPlaneX = plan.x;
+	  plan.x = plan.x * cos(rotSpeed) - plan.y * sin(rotSpeed);
+	  plan.y = oldPlaneX * sin(rotSpeed) + plan.y * cos(rotSpeed);
+	}
       raycast(pixels, camera, plan);
       sfTexture_updateFromPixels(texture, pixels->pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
       sfRenderWindow_clear(window, sfBlack);
