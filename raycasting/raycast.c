@@ -5,91 +5,85 @@
 ** Login   <tbesson@epitech.net>
 ** 
 ** Started on  Mon Jan  2 15:02:06 2017 Tamsi Besson
-** Last update Wed Jan  4 21:19:10 2017 Tamsi Besson
+** Last update Thu Jan  5 11:46:41 2017 Tamsi Besson
 */
 
 #include "my.h"
 
-//float raycast(sfVector2f pos, float direction, int **map, sfVector2i mapSize)
-float raycast(t_my_framebuffer *framebuffer, t_pdir camera, sfVector2f plan)
+float raycast(sfVector2f pos, float direction, sfVector2i mapSize)
 {
-  int   x;
-  //float line_h;
+  //degres->radian => degres * (pi / 180)
+  int		hit = 0;
+  int		side;
+  float line_h;
+  float perpWallDist;
+  sfVector2i  step;
+  sfVector2f  dir;
+  sfVector2f   sideDist;
+  t_coo   deltaDist;
 
-  x = 0;
-  while (x < SCREEN_WIDTH)
+  dir.x = cos(direction);
+  // * G_LEN;
+  dir.y = sin(direction);
+  // * G_LEN;
+  //printf(" x = %f, y = %f", dir.x, dir.y);
+  deltaDist.x = sqrt(1 + (dir.y * dir.y) / (dir.x * dir.x));
+  deltaDist.y = sqrt(1 + (dir.x * dir.x) / (dir.y * dir.y));
+  if (dir.x < 0)
     {
-      int		hit = 0;
-      int		side;
-      sfVector2i  step;
-      sfVector2i	my_map;
-      t_pdir		ray;
-      double		perpWallDist;
-      double		camReduc;
-      t_coo   sideDist;
-      t_coo   deltaDist;
-
-      //rays + reduction orthonormée
-      camReduc = ((2 * x) / (double)SCREEN_WIDTH - 1);
-      ray.pos.y = camera.pos.y;
-      ray.pos.x = camera.pos.x;
-      ray.dir.x = camera.dir.x + plan.x * camReduc;
-      ray.dir.y = camera.dir.y + plan.y * camReduc;
-
-      my_map.x = (int)ray.pos.x;
-      my_map.y = (int)ray.pos.y;
-      deltaDist.x = sqrt(1 + (ray.dir.y * ray.dir.y) / (ray.dir.x * ray.dir.x));
-      deltaDist.y = sqrt(1 + (ray.dir.x * ray.dir.x) / (ray.dir.y * ray.dir.y));
-      if (ray.dir.x < 0)
-        {
-          step.x = -1;
-          sideDist.x = (ray.pos.x - my_map.x) * deltaDist.x;
-        }
-      else
-        {
-          step.x = 1;
-          sideDist.x = (my_map.x + 1.0 - ray.pos.x) * deltaDist.x;
-        }
-      if (ray.dir.y < 0)
-        {
-          step.y = -1;
-          sideDist.y = (ray.pos.y - my_map.y) * deltaDist.y;
-        }
-      else
-        {
-          step.y = 1;
-          sideDist.y = (my_map.y + 1.0 - ray.pos.y) * deltaDist.y;
-        }
-      while (hit == 0)
-        {
-          if (sideDist.x < sideDist.y)
-            {
-              sideDist.x += deltaDist.x;
-              my_map.x += step.x;
-              side = 0;
-            }
-          else
-            {
-              sideDist.y += deltaDist.y;
-              my_map.y += step.y;
-              side = 1;
-            }
-          if (map[my_map.x][my_map.y] > 0)
-            hit = 1;
-        }
-      if (side == 0)
-        perpWallDist = (my_map.x - ray.pos.x + (1 - step.x) / 2) / ray.dir.x;
-      else
-        perpWallDist = (my_map.y - ray.pos.y + (1 - step.y) / 2) / ray.dir.y;
-
-      float line_h;
-      line_h = (float)(SCREEN_HEIGHT / perpWallDist);
-      draw_vert(x, (int)line_h, framebuffer, my_map);
-      x++;
+      step.x = -1;
+      sideDist.x = (pos.x - G_MAP_COO.x) * deltaDist.x;
     }
+  else
+    {
+      step.x = 1;
+      sideDist.x = (G_MAP_COO.x + 1.0 - pos.x) * deltaDist.x;
+    }
+  if (dir.y < 0)
+    {
+      step.y = -1;
+      sideDist.y = (pos.y - G_MAP_COO.y) * deltaDist.y;
+    }
+  else
+    {
+      step.y = 1;
+      sideDist.y = (G_MAP_COO.y + 1.0 - pos.y) * deltaDist.y;
+    }
+  while (hit == 0)
+    {
+      if (sideDist.x < sideDist.y)
+        {
+          sideDist.x += deltaDist.x;
+          G_MAP_COO.x += step.x;
+          side = 0;
+        }
+      else
+        {
+          sideDist.y += deltaDist.y;
+          G_MAP_COO.y += step.y;
+          side = 1;
+        }
+      if (map[G_MAP_COO.x][G_MAP_COO.y] > 0)
+        hit = 1;
+    }
+  if (side == 0)
+    perpWallDist = (G_MAP_COO.x - pos.x + (1 - step.x) / 2) / (dir.x);
+  else
+    perpWallDist = (G_MAP_COO.y - pos.y + (1 - step.y) / 2) / (dir.y);
+  line_h = (float)(SCREEN_HEIGHT / perpWallDist);
+  return (line_h);
 }
 
-void  draw_vert(int x, int line_h, t_my_framebuffer *framebuffer, sfVector2i my_map)
+/*int my_DDA(t_coo sideDist, t_coo deltaDist)
+{
+  int hit;
+  int side;
+
+  
+  return (side);
+}*/
+
+void  draw_vert(int x, int line_h, t_my_framebuffer *framebuffer)
 {
   int draw_start;
   int draw_end;
@@ -107,15 +101,15 @@ void  draw_vert(int x, int line_h, t_my_framebuffer *framebuffer, sfVector2i my_
   to.x = SCREEN_WIDTH;
   from.y = 0;
   to.y = draw_start;
-  my_draw_line(framebuffer, from, to, sfBlack);
+  my_draw_line(framebuffer, from, to, sfCyan);
   from.y = draw_start;
   to.y = draw_end;
-  if (map[my_map.x][my_map.y] == 1)
-    color = sfBlue;
-  else if (map[my_map.x][my_map.y] == 2)
+  if (map[G_MAP_COO.x][G_MAP_COO.y] == 1)
     color = sfRed;
+  else if (map[G_MAP_COO.x][G_MAP_COO.y] >= 2)
+    color = sfBlue;
   my_draw_line(framebuffer, from, to, color);
   from.y = draw_end;
   to.y = SCREEN_HEIGHT;
-  my_draw_line(framebuffer, from, to, sfBlack);
+  my_draw_line(framebuffer, from, to, sfGreen);
 }
